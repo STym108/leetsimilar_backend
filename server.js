@@ -52,7 +52,8 @@ app.get('/related', async (req, res) => {
       }
   
       const result = await Relatedcollection.findOne({ title: new RegExp(`^${title}$`, "i") });
-      console.log("Query received:", req.query.title);
+      console.log("🧪 Query Result:", result); // <-- ADD THIS
+  
       if (!result) {
         return res.status(404).json({ error: "No related question found" });
       }
