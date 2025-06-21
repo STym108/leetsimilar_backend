@@ -43,6 +43,6 @@ app.get('/related',async (req,res)=>{
 });
 
 
-app.listen(process.env.port|| 5001,()=>{
+app.listen(process.env.Port|| 5001,()=>{
     console.log(`listening on the port ${process.env.port}....`)
 })
