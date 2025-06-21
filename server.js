@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Connect to MongoDB
-const url = process.env.Mongo_url;
+const url = process.env.MONGO_URL;
 connectwithmongo(url);
 
 // Schema and Model
