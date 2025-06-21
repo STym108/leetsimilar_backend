@@ -18,9 +18,16 @@ connectwithmongo(url);
 
 // Schema and Model
 const Relatedschema = new mongoose.Schema({
-  title: String,
-  data: Object
-});
+    title: {
+      type: String,
+      required: true,
+    },
+    data: {
+      GeeksforGeeks: String,
+      CSES: String,
+      Codeforces: String
+    }
+  });
 const Relatedcollection = mongoose.model(
     "RelatedQuestion",
     Relatedschema,
@@ -30,7 +37,10 @@ const Relatedcollection = mongoose.model(
 app.get('/', (req, res) => {
   res.send("LeetCode Similar Questions API is running.");
 });
-
+app.get('/all', async (req, res) => {
+    const all = await Relatedcollection.find({});
+    res.json(all);
+  });
 // API route to get related questions
 app.get('/related', async (req, res) => {
     try {
@@ -42,7 +52,7 @@ app.get('/related', async (req, res) => {
       }
   
       const result = await Relatedcollection.findOne({ title: new RegExp(`^${title}$`, "i") });
-  
+      console.log("Query received:", req.query.title);
       if (!result) {
         return res.status(404).json({ error: "No related question found" });
       }
