@@ -21,35 +21,18 @@ const Relatedschema = new mongoose.Schema({
   title: String,
   data: Object
 });
-const Relatedcollection = mongoose.model("RelatedQuestion", Relatedschema);
-
+const Relatedcollection = mongoose.model(
+    "RelatedQuestion",
+    Relatedschema,
+    "Related_questions_collection"
+  );
 // Test route
 app.get('/', (req, res) => {
   res.send("LeetCode Similar Questions API is running.");
 });
 
 // API route to get related questions
-app.get('/related', async (req, res) => {
-  try {
-    const { title } = req.query;
-    console.log("🔎 Received title:", title);
 
-    if (!title) {
-      return res.status(400).json({ error: "Title not provided" });
-    }
-
-    const result = await Relatedcollection.findOne({ title: new RegExp(`^${title}$`, "i") });
-
-    if (!result) {
-      return res.status(404).json({ error: "No related question found" });
-    }
-
-    res.json(result);
-  } catch (error) {
-    console.error("❌ Error while fetching related questions:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 // Start the server
 const PORT = process.env.PORT || 5001;
