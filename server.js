@@ -51,8 +51,15 @@ app.get('/related', async (req, res) => {
         return res.status(400).json({ error: "Title not provided" });
       }
   
-      const result = await Relatedcollection.findOne({ title: new RegExp(`^${title}$`, "i") });
-      console.log("🧪 Query Result:", result); // <-- ADD THIS
+      const allDocs = await Relatedcollection.find({});
+      console.log("📋 All titles in DB:");
+      allDocs.forEach(doc => console.log("➡️", doc.title));
+  
+      const result = await Relatedcollection.findOne({
+        title: { $regex: `^${title}$`, $options: 'i' }
+      });
+  
+      console.log("🧪 Query Result:", result);
   
       if (!result) {
         return res.status(404).json({ error: "No related question found" });
