@@ -74,10 +74,7 @@ app.get('/', (req, res) => {
   res.send("LeetCode Similar Questions API is running.");
 });
 
-app.get('/all', async (req, res) => {
-  const all = await Relatedcollection.find({});
-  res.json(all);
-});
+
 
 // Main API
 app.get('/related', async (req, res) => {
